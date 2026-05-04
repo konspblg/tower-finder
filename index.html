@@ -814,7 +814,7 @@ function openModal(tid){
             <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
             Buka Google Maps
           </a>
-          <button class="btn-copy" id="copy-btn" onclick="copyCoord('${t.lat},${t.lon}')">
+          <button class="btn-copy" id="copy-btn" onclick="copyCoord(this,'${t.lat}','${t.lon}',${JSON.stringify(t.asset)},${JSON.stringify(t.no)})">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
             Salin Koordinat
           </button>`
@@ -839,9 +839,10 @@ function closeModal(e){
 // ESC key
 document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal({}); });
 
-function copyCoord(coord){
-  navigator.clipboard.writeText(coord).then(()=>{
-    const btn=document.getElementById('copy-btn');
+function copyCoord(btn, lat, lon, asset, no){
+  const mapsUrl='https://www.google.com/maps?q='+lat+','+lon+'&z=17';
+  const text=asset+'\nNo. Tower: #'+no+'\n'+mapsUrl;
+  navigator.clipboard.writeText(text).then(()=>{
     if(!btn) return;
     const orig=btn.innerHTML;
     btn.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Disalin!';
