@@ -741,10 +741,10 @@ function render(res){
         </tr></thead>
         <tbody>`;
 
-    towers.forEach(t=>{
+    towers.forEach((t,_tidx)=>{
       const lat=parseFloat(t.lat), lon=parseFloat(t.lon);
       const hasC=!isNaN(lat)&&!isNaN(lon);
-      const tid='t_'+btoa(t.asset+'|'+t.no).replace(/[^a-zA-Z0-9]/g,'').slice(0,16);
+      const tid='t_'+_tidx;
       // store data on window
       window['_td_'+tid]=t;
       html+=`<tr>
